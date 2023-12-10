@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="subscribe-container" id="subscribe-container">
+        <h2>Subscribe Our Newsletter </h2>
+        <p>SUBSCRIBE TO GET EVERY SNEAK PEAK ABOUT UPCOMING UPDATES.</p>
+        <div class="subscribe-email">
+            <div class="email-icon"><i class="fa fa-envelope"></i></div>
+            <div class="email-id"><input type="email" id="emailInput" placeholder="Enter your email id"/></div>
+            <p class="error"></p> <!-- Error message placeholder -->
+            <button class="subscribe-btn" id="subscribe-btn">Subscribe</button>
+        </div>
+    </div>
+    <div class="popup-container" id="popup-container">
+        <p class="thumbs"><i class="fa fa-thumbs-o-up fa-2x"></i></p>
+        <small id="popupMessage">THANK YOU</small>
+        <p>Thank you for subscribing to our weekly newsletter!</p>
+        <!-- Remove the close button for subscribed users -->
+    </div>
+
+    <style>
+        /* Your existing CSS styles */
+
+        .error {
+            color: RED;
+            font-size: 9px;
+        }
+    </style>
+
+    <script>
+        window.onload = function () {
+            let subscribeContainer = document.getElementById('subscribe-container');
+            let popupContainer = document.getElementById('popup-container');
+            let subscribeBtn = document.getElementById('subscribe-btn');
+            let emailInput = document.getElementById('emailInput');
+            let popupMessage = document.getElementById('popupMessage');
+            let errorElement = document.querySelector('.error');
+
+            subscribeBtn.addEventListener('click', function () {
+                // Clear previous error messages
+                errorElement.innerHTML = '';
+
+                // Validate email
+                let email = emailInput.value.trim();
+                if (!validateEmail(email)) {
+                    errorElement.innerHTML = 'Email is invalid';
+                    return;
+                }
+
+                // Disable subscribe button and show "Please wait" message
+                subscribeBtn.disabled = true;
+                subscribeBtn.innerHTML = 'Please wait...';
+
+                // Simulate asynchronous subscription process (you can replace this with actual subscription logic)
+                setTimeout(function () {
+                    // Save subscriber data in local storage
+                    saveSubscriber(email);
+
+                    // Show subscribed alert
+                    popupContainer.style.display = 'flex';
+                    subscribeContainer.style.display = 'none';
+
+                    // Reset email input and error message
+                    emailInput.value = '';
+                    errorElement.innerHTML = '';
+
+                    // Enable subscribe button
+                    subscribeBtn.disabled = false;
+                    subscribeBtn.innerHTML = 'Subscribe';
+                }, 5000);
+            });
+
+            // Check if the user has subscribed before
+            if (checkSubscriber()) {
+                // Display a message for subscribed users
+                showSubscribedMessage();
+            }
+        };
+
+        function validateEmail(email) {
+            // Simple email validation
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function saveSubscriber(email) {
+            // Save subscriber data in local storage
+            localStorage.setItem('subscriberEmail', email);
+        }
+
+        function checkSubscriber() {
+            // Check if the user has subscribed before
+            return localStorage.getItem('subscriberEmail') !== null;
+        }
+
+        function showSubscribedMessage() {
+            // Display a message for subscribed users
+            let subscribeContainer = document.getElementById('subscribe-container');
+            let popupContainer = document.getElementById('popup-container');
+
+            subscribeContainer.innerHTML = '<p></p>';
+            popupContainer.style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
+<STYLE>*{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: rgb(196, 4, 62);
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    transition: all ease 1s;
+}
+.subscribe-container{
+    width: auto;
+    height: auto;
+    display: flex;
+    color: #fff;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.subscribe-email{
+    width: 300px;
+    height: 35px;
+    background-color: #fff;
+    border-radius: 5px;
+    display: flex;
+}
+.email-icon{
+    width: 50px;
+    height: 100%;
+    line-height: 40px;
+    color: rgb(196, 4, 62);
+    background-color: rgb(248, 240, 240);
+}
+.email-id{
+    width: 180px;
+    height: 100%;
+}
+.email-id input{
+    width: 100%;
+    height: 100%;
+    padding-left: 10px;
+    border: none;
+    outline: none;
+}
+.subscribe-btn{
+    width: 70px;
+    background-color: rgb(196, 4, 62);
+    color: #fff;
+    font-size: 12px;
+    border: 2px solid #fff;
+    border-radius: 0px 5px 5px 0px;
+    outline: none;
+    cursor: pointer;
+}
+.subscribe-btn:active{
+    transform: scale(.95);
+}
+.popup-container{
+    width: 280px;
+    height: 180px;
+    padding: 10px;
+    text-align: center;
+    background: #fff;
+    border-radius: 10px;
+    position: relative;
+    bottom: 0px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: animate .5s;
+    z-index:2;
+}
+@keyframes animate {
+    0%{
+          bottom: -500px;
+          opacity:0;
+    }
+    100%{
+          bottom: 0px;
+          opacity:1;
+    }
+}
+#continue-btn{
+    width: 100px;
+    padding: 8px;
+    margin-bottom: 15px;
+    background-color: rgb(196, 4, 62);
+    color:#fff;
+    border:none ;
+    outline:0;
+    border-radius: 20px;
+    line-height: 15px;
+    font-size: 10px;
+}
+small{
+    font-size: 10px;
+}
+p{
+    margin: 5px;
+    font-size: 14px;
+}
+.fa{
+    color:rgb(196, 4, 62);
+}</STYLE>
